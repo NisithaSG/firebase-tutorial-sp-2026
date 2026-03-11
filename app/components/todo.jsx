@@ -9,34 +9,93 @@ export default function Todo() {
       id: "1",
       task: "✨ Plan for upcoming board meeting",
       status: false,
+      active: false,
+      editMode: false,
     },
-    { id: "2", task: "📄 Reserve room", status:false },
+    {
+      id: "2",
+      task: "📄 Reserve room",
+      status: false,
+      active: false,
+      editMode: false,
+    },
     {
       id: "3",
       task: "🤝 Schedule meeting with professors",
       status: false,
+      active: false,
+      editMode: false,
     },
-    { id: "4", task: "🥘 Order food for GBM", status: false},
-    { id: "5", task: "🔥 Firebase workshop!", status: false },
+    {
+      id: "4",
+      task: "🥘 Order food for GBM",
+      status: false,
+      active: false,
+      editMode: false,
+    },
+    {
+      id: "5",
+      task: "🔥 Firebase workshop!",
+      status: false,
+      active: false,
+      editMode: false,
+    },
   ];
 
   const [myTasks, setTasks] = useState(tasks);
   const [input, setInput] = useState("");
-  
 
   function handleAddTodo() {
-    const newTask = { id: `todo-${nanoid()}`, task:input, status: false };
-    setTasks([...myTasks, newTask]);
-    setInput("");
+    const newTask = { id: `todo-${nanoid()}`, task: input, status: false };
+    if (input.length > 0) {
+      setTasks([...myTasks, newTask]);
+      setInput("");
+    }
   }
 
   function handleOnClick(id) {
-    const updatedTasks = myTasks.map(task => {
-      if(id == task.id){
-        return {...task, status: !task.status};
+    const updatedTasks = myTasks.map((task) => {
+      if (id == task.id) {
+        return { ...task, status: !task.status };
       }
       return task;
-    })
+    });
+    setTasks(updatedTasks);
+  }
+
+  function handleTaskClick(id) {
+    const updatedTasks = myTasks.map((task) => {
+      if (id == task.id) {
+        return { ...task, active: !task.active };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
+  function handleDelete(id) {
+    const remainingTasks = myTasks.filter((task) => id !== task.id);
+    setTasks(remainingTasks);
+  }
+
+  function handleEditClick(id) {
+    const updatedTasks = myTasks.map((task) => {
+      if (id == task.id) {
+        return { ...task, editMode: !task.editMode };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
+  function handleEditSubmit(id, newTaskText) {
+    const updatedTasks = myTasks.map((task) => {
+      if (id == task.id) {
+        return { ...task, task: newTaskText, editMode: !task.editMode };
+      }
+      console.log(newTaskText);
+      return task;
+    });
     setTasks(updatedTasks);
   }
 
@@ -51,7 +110,13 @@ export default function Todo() {
             id={item.id}
             task={item.task}
             status={item.status}
+            active={item.active}
+            editMode={item.editMode}
             handleOnClick={() => handleOnClick(item.id)}
+            handleTaskClick={() => handleTaskClick(item.id)}
+            handleDelete={() => handleDelete(item.id)}
+            handleEditClick={() => handleEditClick(item.id)}
+            handleEditSubmit={(id, newText) => handleEditSubmit(id, newText)}
           />
         ))}
       </ul>
@@ -61,10 +126,10 @@ export default function Todo() {
           type="text"
           className="rounded-md border-2 border-white bg-white p-0.5"
           value={input}
-          onChange={e => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value)}
         />
         <button
-          className="bg-pink-500 shadow-lg shadow-pink-500/50 text-white p-2 rounded-md active:relative active:top-0.5"
+          className="bg-pink-500 shadow-lg shadow-pink-500/50 text-white p-2 rounded-md active:relative active:top-0.5 cursor-pointer"
           onClick={handleAddTodo}
         >
           Add To-Do
