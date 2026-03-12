@@ -1,15 +1,19 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
-import { initializeApp } from "firebase/app"; // used to initialize new app in firebase
-
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyD7KlpG5r7WzztoY8uFheZlYcQTkAg0kCo", // TO-DO
-  authDomain: "wics-tutorial.firebaseapp.com", // TO-DO
-  projectId: "wics-tutorial", // TO-DO
-  storageBucket: "wics-tutorial.firebasestorage.app",
-  messagingSenderId: "565120634673",
-  appId: "1:565120634673:web:b0ae9c69be5e0f71276a10",
-  measurementId: "G-B1W0D30PJL"
+  apiKey: "AIzaSyB2WZmX2Q9BOSFpKWjfXuup_wtRfsunlcE",
+  authDomain: "fir-demo2026-ae4c4.firebaseapp.com",
+  projectId: "fir-demo2026-ae4c4",
+  storageBucket: "fir-demo2026-ae4c4.firebasestorage.app",
+  messagingSenderId: "379844637665",
+  appId: "1:379844637665:web:27ab967e0322ff797798a0",
+  measurementId: "G-THPFE35CVY"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig); // variable that connects our project with fb services
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
