@@ -1,6 +1,6 @@
 "use client";
 import ListItem from "./listItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid"; // this is just for generating  from "random ids
 import {addDoc, collection, deleteDoc, doc, onSnapshot, updateDoc} from "firebase/firestore"
 import {db} from "../config/firebase";
@@ -56,7 +56,7 @@ export default function Todo() {
   // {TODO 2}: Add a GET api to listen in real-time for any db updates
 
   useEffect(() => {
-    const unsub = onShapshot(collection(db, "tasks"), (snapshot) => {
+    const unsub = onSnapshot(collection(db, "tasks"), (snapshot) => {
       const tasksArray = snapshot.docs.map((doc) =>({
         id: doc.id,
         ...doc.data(),
